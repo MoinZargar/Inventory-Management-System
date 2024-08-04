@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useState } from 'react';
+import Header from './Components/Header';
+import Todos from './Components/Todos';
+import Footer from './Components/Footer'
+import AddTodo from './Components/AddTodo';
 function App() {
+  const [todos,setTodos]=useState([])
+  const deleteTodo=(todo)=>{
+    const newTodo=todos.filter((currentTodo)=>(
+          currentTodo!==todo
+    ))
+    setTodos(newTodo)
+  }
+  const addTodo=(title,desc)=>{
+    const newTodo={
+      id:todos.length+1,
+      title:title,
+      desc:desc,
+    }
+    setTodos(prev => [...prev,newTodo])
+
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <>
+   <Header title="Inventory Management System"/>
+   <AddTodo addTodo={addTodo}/>
+   <Todos todos={todos}  deleteTodo={deleteTodo}/>
+   <Footer/>
+   </>
   );
 }
 
